@@ -1,0 +1,26 @@
+services:
+  sogo-api:
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+    image: sogo-app
+    ports:
+      - '8080:8080'
+    depends_on:
+      - postgres-sogo
+
+  postgres-sogo:
+    container_name: postgres-sogo
+    image: postgres:13
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: sogo
+      PGDATA: /data/postgres
+    volumes:
+      - postgres:/data/postgres
+    ports:
+      - "5432:5432"
+
+volumes:
+  postgres:
